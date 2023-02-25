@@ -116,12 +116,13 @@ local Window = Rayfield:CreateWindow({
         CoinCollect = Value
         if CoinCollect then
             pcall(function ()
+                while CoinCollect and task.wait() do
                 local coins = game:GetService("Workspace"):GetDescendants()
                 for i,v in pairs(coins) do 
                 if v.Name == 'CoinDrop' then
                     v.CFrame = game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame
-                    wait(0.6)
                 end
+            end
                 end               
             end)
         end
@@ -429,7 +430,7 @@ local Window = Rayfield:CreateWindow({
  local Dropdown = Tab1:CreateDropdown({
     Name = "Select Desert Kingdom Mobs",
     Options = {"Steel","BombMan","Kilo","Spikes","Mole","Batter"},
-    CurrentOption = "Steel",
+    CurrentOption = "",
     Flag = "Dropdown1", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
     Callback = function(Option)
         SelectName = Option
