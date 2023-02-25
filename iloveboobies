@@ -1,0 +1,324 @@
+repeat wait() until game:IsLoaded()
+
+local VirtualUser = game:GetService("VirtualUser")
+
+game:GetService("Players").LocalPlayer.Idled:Connect(
+    function()
+        VirtualUser:CaptureController()
+        VirtualUser:ClickButton2(Vector2.new())
+    end
+)
+
+local nameOfGame = game:GetService("MarketplaceService"):GetProductInfo(game.PlaceId)
+
+local Rayfield = loadstring(game:HttpGet('https://raw.githubusercontent.com/UI-Interface/CustomFIeld/main/RayField.lua'))()
+
+local Window = Rayfield:CreateWindow({
+    Name = nameOfGame.Name,
+    LoadingTitle = nameOfGame.Name,
+    LoadingSubtitle = "by BIGDICK",
+    ConfigurationSaving = {
+       Enabled = true,
+       FolderName = nil, -- Create a custom folder for your hub/game
+       FileName = "PornHub"
+    },
+    Discord = {
+       Enabled = false,
+       Invite = "", -- The Discord invite code, do not include discord.gg/
+       RememberJoins = true -- Set this to false to make them join the discord every time they load it up
+    },
+    KeySystem = false, -- Set this to true to use our key system
+    KeySettings = {
+       Title = "",
+       Subtitle = "Key System",
+       Note = "",
+       FileName = "SiriusKey",
+       SaveKey = true,
+       GrabKeyFromSite = false, -- If this is true, set Key below to the RAW site you would like Rayfield to get the key from
+       Key = "Hello"
+    }
+ })
+
+ local Tab = Window:CreateTab("Auto Stuff") -- Title, Image
+
+ local Toggle = Tab:CreateToggle({
+    Name = "Hide Name",
+    CurrentValue = false,
+    Flag = "HideName1", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
+    Callback = function(Value)
+        NameHide = Value
+        if NameHide then
+            pcall(function ()
+                while NameHide do
+                    for _, v in pairs(game:GetService("Workspace").Players:GetChildren()) do
+                        v.Head.LevelDisplay:Destroy()
+                    end
+                end
+                
+            end)
+        end
+    end,
+ })
+
+ local Toggle = Tab:CreateToggle({
+    Name = "Auto Skills",
+    CurrentValue = false,
+    Flag = "Skill1", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
+    Callback = function(Value)
+        SkillAuto = Value
+        if SkillAuto then
+            pcall(function ()
+                while SkillAuto and task.wait() do
+                    local button = game:service'VirtualInputManager'
+                    local X, Y = 0, 0
+    
+                        button:SendMouseButtonEvent(X, Y, 0, true, game, 1)
+                        button:SendMouseButtonEvent(X, Y, 0, false, game, 1)
+                        wait(0.3)
+                        button:SendKeyEvent(true, "Q", false, game)
+                        button:SendKeyEvent(true, "E", false, game)
+                        button:SendKeyEvent(true, "R", false, game)
+                        button:SendKeyEvent(true, "T", false, game)
+                        button:SendKeyEvent(true, "One", false, game)
+                        button:SendKeyEvent(true, "Two", false, game)
+                        button:SendKeyEvent(true, "Three", false, game)
+                        button:SendKeyEvent(true, "Four", false, game)
+                end
+                
+            end)
+        end
+    end,
+ })
+
+ local Toggle = Tab:CreateToggle({
+    Name = "Auto Collect Coins",
+    CurrentValue = false,
+    Flag = "CoinToggle1", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
+    Callback = function(Value)
+        CoinCollect = Value
+        if CoinCollect then
+            pcall(function ()
+                local coins = game:GetService("Workspace"):GetDescendants()
+                for i,v in pairs(coins) do 
+                if v.Name == 'CoinDrop' then
+                    v.CFrame = game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame
+                    wait(0.6)
+                end
+                end               
+            end)
+        end
+    end,
+ })
+
+ local Toggle = Tab:CreateToggle({
+    Name = "Auto World 1 Egg",
+    CurrentValue = false,
+    Flag = "eggToggle1", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
+    Callback = function(Value)
+        egg1 = Value
+        if egg1 then
+            pcall(function ()
+                local args = {[1] = "World1"} 
+                game:GetService("ReplicatedStorage")._remotes.CharacterHatchFunctionTriple:InvokeServer(unpack(args))
+                wait(1)
+                
+            end)
+        end
+    end,
+ })
+
+ local Toggle = Tab:CreateToggle({
+    Name = "Auto World 2 Egg",
+    CurrentValue = false,
+    Flag = "eggToggle2", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
+    Callback = function(Value)
+        egg2 = Value
+        if egg2 then
+            pcall(function ()
+                local args = {[1] = "World2"}
+                game:GetService("ReplicatedStorage")._remotes.CharacterHatchFunctionTriple:InvokeServer(unpack(args))
+                wait(1)
+                
+            end)
+        end
+    end,
+ })
+
+ local Tab1 = Window:CreateTab("Auto Farms") -- Title, Image
+
+ local Dropdown = Tab1:CreateDropdown({
+    Name = "Select Mobs",
+    Options = {"Steel","BombMan","Kilo","Spikes","Mole","Batter"},
+    CurrentOption = "Steel",
+    Flag = "Dropdown1", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
+    Callback = function(Option)
+        SelectName = Option
+    end,
+ })
+
+ local Toggle = Tab1:CreateToggle({
+    Name = "Auto Farm",
+    Info = "", -- Speaks for itself, Remove if none.
+    CurrentValue = false,
+    Flag = "FarmToggle1", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
+    Callback = function(Value)
+        FarmAuto = Value
+        if FarmAuto then
+            pcall(function ()
+                while FarmAuto and task.wait() do
+                    for i,v in pairs(game:GetService("Workspace").Enemies.World2Zone2:GetChildren()) do
+                        if v:IsA("Model") and v:FindFirstChild('HumanoidRootPart') and v:FindFirstChild('Humanoid') and v.Humanoid.Health > 0 and v.Name == SelectName then
+                            game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = v.HumanoidRootPart.CFrame * CFrame.new(0,0,5)
+                        end
+                    end
+                end
+                
+            end)
+        end
+    end,
+ })
+
+local  plr = game.Players.LocalPlayer
+
+ function farmboss(boss)
+     if getgenv().bossname ~= nil then
+         for i,v in pairs(game.Workspace:GetChildren()) do
+             if v:IsA("Folder") and v.Name:match(plr.UserId.."BossBattleFolder") then
+                 if v:FindFirstChild(boss) then
+                     if v[boss]:FindFirstChild("Humanoid").Health > 0 then
+                         plr.Character:FindFirstChild("HumanoidRootPart").CFrame = v[boss]:FindFirstChild("HumanoidRootPart").CFrame * CFrame.new(0,0,5)
+                     end
+                 end    
+             end 
+         end 
+     end
+ end
+ 
+ 
+ function startbossfarm(boss)
+     
+ if plr.Character:FindFirstChild("HumanoidRootPart") then
+         if boss == "Cap Freeman" and not game.Workspace:FindFirstChild(plr.UserId .. "BossBattleFolder") then
+             plr.Character.HumanoidRootPart.CFrame = CFrame.new(977.35614, 52.2258492, 739.708618, -0.999380112, 3.05162366e-08, 0.0352046527, 3.03523748e-08, 1, -5.18903764e-09, -0.0352046527, -4.11727585e-09, -0.999380112)
+             plr.Character.HumanoidRootPart.Anchored = true
+             task.wait(2)
+             plr.Character.HumanoidRootPart.Anchored = false
+             fireproximityprompt(game:GetService("Workspace").Bosses[boss].HumanoidRootPart.ProximityPrompt)
+             button = game:GetService("Players").LocalPlayer.PlayerGui.MainGui.MainFrame.BossFight.ContinueFrame.Continue
+             task.wait(2)
+             for i,v in pairs(getconnections(button.Activated)) do
+                 v:Fire()
+             end
+             task.wait(2)
+             farmboss(boss)
+         elseif boss == "Boogie" and not game.Workspace:FindFirstChild(plr.UserId .. "BossBattleFolder") then
+             plr.Character.HumanoidRootPart.CFrame = CFrame.new(4049.39258, 100.916237, 487.413666, -0.00746295368, -4.52747706e-08, -0.999972165, -1.74710664e-08, 1, -4.51456437e-08, 0.999972165, 1.71336598e-08, -0.00746295368)
+             plr.Character.HumanoidRootPart.Anchored = true
+             task.wait(2)
+             plr.Character.HumanoidRootPart.Anchored = false
+             fireproximityprompt(game:GetService("Workspace").Bosses[boss].HumanoidRootPart.ProximityPrompt)
+             button = game:GetService("Players").LocalPlayer.PlayerGui.MainGui.MainFrame.BossFight.ContinueFrame.Continue
+             task.wait(2)
+             for i,v in pairs(getconnections(button.Activated)) do
+                 v:Fire()
+             end
+             task.wait(2)
+             farmboss(boss)
+         elseif boss == "Slasher" and not game.Workspace:FindFirstChild(plr.UserId .. "BossBattleFolder") then
+             plr.Character.HumanoidRootPart.CFrame = CFrame.new(6969.67871, 23.0138168, 483.006012, 0.255250245, 1.12091385e-07, -0.966875017, -2.18212755e-08, 1, 1.10170902e-07, 0.966875017, -7.02270464e-09, 0.255250245)
+             plr.Character.HumanoidRootPart.Anchored = true
+             task.wait(2)
+             plr.Character.HumanoidRootPart.Anchored = false
+             fireproximityprompt(game:GetService("Workspace").Bosses[boss].HumanoidRootPart.ProximityPrompt)
+             button = game:GetService("Players").LocalPlayer.PlayerGui.MainGui.MainFrame.BossFight.ContinueFrame.Continue
+             task.wait(2)
+             for i,v in pairs(getconnections(button.Activated)) do
+                 v:Fire()
+             end
+             task.wait(2)
+             farmboss(boss)
+         elseif boss == "Don Craig" and not game.Workspace:FindFirstChild(plr.UserId .. "BossBattleFolder") then
+             plr.Character.HumanoidRootPart.CFrame = CFrame.new(9572.91016, 15.1261148, 452.330963, -0.0230331887, 4.58216505e-08, -0.9997347, -6.02195138e-09, 1, 4.5972552e-08, 0.9997347, 7.0792483e-09, -0.0230331887)
+             plr.Character.HumanoidRootPart.Anchored = true
+             task.wait(2)
+             plr.Character.HumanoidRootPart.Anchored = false
+             fireproximityprompt(game:GetService("Workspace").Bosses[boss].HumanoidRootPart.ProximityPrompt)
+             button = game:GetService("Players").LocalPlayer.PlayerGui.MainGui.MainFrame.BossFight.ContinueFrame.Continue
+             task.wait(2)
+             for i,v in pairs(getconnections(button.Activated)) do
+                 v:Fire()
+             end
+             task.wait(2)
+             farmboss(boss)
+         elseif boss == "Sawfish" and not game.Workspace:FindFirstChild(plr.UserId .. "BossBattleFolder") then
+             plr.Character.HumanoidRootPart.CFrame = CFrame.new(12393.585, 15.9946442, 550.497437, -0.985396147, -2.37007214e-08, -0.170277596, -4.12453254e-08, 1, 9.94978961e-08, 0.170277596, 1.05067997e-07, -0.985396147)
+             plr.Character.HumanoidRootPart.Anchored = true
+             task.wait(2)
+             plr.Character.HumanoidRootPart.Anchored = false
+             fireproximityprompt(game:GetService("Workspace").Bosses[boss].HumanoidRootPart.ProximityPrompt)
+             button = game:GetService("Players").LocalPlayer.PlayerGui.MainGui.MainFrame.BossFight.ContinueFrame.Continue
+             task.wait(2)
+             for i,v in pairs(getconnections(button.Activated)) do
+                 v:Fire()
+             end
+             task.wait(2)
+             farmboss(boss)
+         elseif boss == "Muncher" and not game.Workspace:FindFirstChild(plr.UserId .. "BossBattleFolder") then
+             plr.Character.HumanoidRootPart.CFrame = CFrame.new(678.908386, -73.6656799, 4207.79785, -0.663332283, 1.04694912e-07, 0.74832499, 6.49905516e-08, 1, -8.22965731e-08, -0.74832499, -5.95591754e-09, -0.663332283)
+             plr.Character.HumanoidRootPart.Anchored = true
+             task.wait(2)
+             plr.Character.HumanoidRootPart.Anchored = false
+             fireproximityprompt(game:GetService("Workspace").Bosses[boss].HumanoidRootPart.ProximityPrompt)
+             button = game:GetService("Players").LocalPlayer.PlayerGui.MainGui.MainFrame.BossFight.ContinueFrame.Continue
+             task.wait(2)
+             for i,v in pairs(getconnections(button.Activated)) do
+                 v:Fire()
+             end
+             task.wait(2)
+             farmboss(boss)
+         elseif boss == "Croc" and not game.Workspace:FindFirstChild(plr.UserId .. "BossBattleFolder") then
+             plr.Character.HumanoidRootPart.CFrame = CFrame.new(4247.96973, -112.418404, 3557.95923, -0.17554608, -8.63102656e-09, -0.984471202, 4.39167351e-08, 1, -1.65981877e-08, 0.984471202, -4.61485108e-08, -0.17554608)
+             plr.Character.HumanoidRootPart.Anchored = true
+             task.wait(2)
+             plr.Character.HumanoidRootPart.Anchored = false
+             fireproximityprompt(game:GetService("Workspace").Bosses[boss].HumanoidRootPart.ProximityPrompt)
+             button = game:GetService("Players").LocalPlayer.PlayerGui.MainGui.MainFrame.BossFight.ContinueFrame.Continue
+             task.wait(2)
+             for i,v in pairs(getconnections(button.Activated)) do
+                 v:Fire()
+             end
+             task.wait(2)
+             farmboss(boss)
+         else
+         farmboss(boss)
+         end
+ end
+ end
+ 
+ coroutine.resume(coroutine.create(function()
+     while task.wait() do
+         if getgenv().bossfarm then
+             startbossfarm(getgenv().bossname)
+         end
+     end
+ end))
+
+
+ local Dropdown = Tab1:CreateDropdown({
+    Name = "Select Boss",
+    Options = {"Cap Freeman", "Boogie", "Slasher", "Don Craig", "Sawfish", "Muncher", "Croc"},
+    CurrentOption = "",
+    Flag = "bossDropdown1", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
+    Callback = function(p)
+        getgenv().bossname = p
+    end,
+ })
+
+ local Toggle = Tab1:CreateToggle({
+    Name = "Auto Boss Farm",
+    CurrentValue = false,
+    Flag = "BossToggle1", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
+    Callback = function(t)
+        getgenv().bossfarm = t
+    end,
+ })
