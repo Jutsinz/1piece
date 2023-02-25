@@ -42,6 +42,24 @@ local Window = Rayfield:CreateWindow({
  local Tab = Window:CreateTab("Auto Stuff") -- Title, Image
 
  local Toggle = Tab:CreateToggle({
+    Name = "Hide Notifications",
+    Info = "Hide the Skill Spam when on Cooldown", -- Speaks for itself, Remove if none.
+    CurrentValue = false,
+    Flag = "notifyToggle1", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
+    Callback = function(Value)
+        Notifyhide = Value
+        if Notifyhide then
+            pcall(function ()
+                while Notifyhide do
+                    game:GetService("Players").LocalPlayer.PlayerGui.MainGui.MainFrame.NotificationFrame:Destroy()
+                    wait()
+                end               
+            end)
+        end
+    end,
+ })
+
+ local Toggle = Tab:CreateToggle({
     Name = "Hide Name",
     CurrentValue = false,
     Flag = "HideName1", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
@@ -118,9 +136,11 @@ local Window = Rayfield:CreateWindow({
         egg1 = Value
         if egg1 then
             pcall(function ()
+                while egg1 do
                 local args = {[1] = "World1"} 
                 game:GetService("ReplicatedStorage")._remotes.CharacterHatchFunctionTriple:InvokeServer(unpack(args))
-                wait(1)
+                wait()
+                end
                 
             end)
         end
@@ -135,9 +155,11 @@ local Window = Rayfield:CreateWindow({
         egg2 = Value
         if egg2 then
             pcall(function ()
+                while egg2 do
                 local args = {[1] = "World2"}
                 game:GetService("ReplicatedStorage")._remotes.CharacterHatchFunctionTriple:InvokeServer(unpack(args))
-                wait(1)
+                wait()
+                end
                 
             end)
         end
@@ -146,8 +168,266 @@ local Window = Rayfield:CreateWindow({
 
  local Tab1 = Window:CreateTab("Auto Farms") -- Title, Image
 
+ local Section = Tab1:CreateSection("Must Be in World First") -- The 2nd argument is to tell if its only a Title and doesnt contain elements
+
+ local Section = Tab1:CreateSection("East Town Quest")
+
+ local Button = Tab:CreateButton({
+    Name = "Teleport to Quest",
+    Interact = 'Changable',
+    Callback = function()
+        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = game:GetService("Workspace").QuestGiver.QuestZone1.HumanoidRootPart.CFrame * CFrame.new(0,0,3)
+    end,
+ })
+
  local Dropdown = Tab1:CreateDropdown({
-    Name = "Select Mobs",
+    Name = "Select East Town Mobs",
+    Options = {"Marine1", "Marine2", "MarineX"},
+    CurrentOption = "",
+    Flag = "w1z1Dropdown1", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
+    Callback = function(Option)
+        World1z1 = Option
+    end,
+ })
+
+ local Toggle = Tab1:CreateToggle({
+    Name = "Auto Farm",
+    CurrentValue = false,
+    Flag = "FarmToggle2", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
+    Callback = function(Value)
+        FarmAuto = Value
+        if FarmAuto then
+            pcall(function ()
+                while FarmAuto and task.wait() do
+                    for i,v in pairs(game:GetService("Workspace").Enemies.World1Zone1:GetChildren()) do
+                        if v:IsA("Model") and v:FindFirstChild('HumanoidRootPart') and v:FindFirstChild('Humanoid') and v.Humanoid.Health > 0 and v.Name == World1z1 then
+                            game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = v.HumanoidRootPart.CFrame * CFrame.new(0,0,5)
+                        end
+                    end
+                end
+                
+            end)
+        end
+    end,
+ })
+
+ local Section = Tab1:CreateSection("Buggy's Town Quest")
+
+ local Button = Tab:CreateButton({
+    Name = "Teleport to Quest",
+    Interact = 'Changable',
+    Callback = function()
+        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = game:GetService("Workspace").QuestGiver.QuestZone2.HumanoidRootPart.CFrame * CFrame.new(0,0,3)
+    end,
+ })
+
+ local Dropdown = Tab1:CreateDropdown({
+    Name = "Select Buggy Town Mobs",
+    Options = {"Minion1", "Minion2", "Tamer", "Cyclist"},
+    CurrentOption = "",
+    Flag = "w1z2Dropdown1", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
+    Callback = function(Option)
+        World1z2 = Option
+    end,
+ })
+
+ local Toggle = Tab1:CreateToggle({
+    Name = "Auto Farm",
+    CurrentValue = false,
+    Flag = "FarmToggle3", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
+    Callback = function(Value)
+        FarmAuto = Value
+        if FarmAuto then
+            pcall(function ()
+                while FarmAuto and task.wait() do
+                    for i,v in pairs(game:GetService("Workspace").Enemies.World1Zone1:GetChildren()) do
+                        if v:IsA("Model") and v:FindFirstChild('HumanoidRootPart') and v:FindFirstChild('Humanoid') and v.Humanoid.Health > 0 and v.Name == World1z2 then
+                            game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = v.HumanoidRootPart.CFrame * CFrame.new(0,0,5)
+                        end
+                    end
+                end
+                
+            end)
+        end
+    end,
+ })
+
+ local Section = Tab1:CreateSection("Maple Village Quest")
+
+ local Button = Tab:CreateButton({
+    Name = "Teleport to Quest",
+    Interact = 'Changable',
+    Callback = function()
+        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = game:GetService("Workspace").QuestGiver.QuestZone3.HumanoidRootPart.CFrame * CFrame.new(0,0,3)
+    end,
+ })
+
+ local Dropdown = Tab1:CreateDropdown({
+    Name = "Select Maple Village Mobs",
+    Options = {"SlasherCrew1", "SlasherCrew2", "CatBro1", "CatBro2", "Hypno"},
+    CurrentOption = "",
+    Flag = "w1z3Dropdown1", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
+    Callback = function(Option)
+        World1z3 = Option
+    end,
+ })
+
+ local Toggle = Tab1:CreateToggle({
+    Name = "Auto Farm",
+    CurrentValue = false,
+    Flag = "FarmToggle3", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
+    Callback = function(Value)
+        FarmAuto = Value
+        if FarmAuto then
+            pcall(function ()
+                while FarmAuto and task.wait() do
+                    for i,v in pairs(game:GetService("Workspace").Enemies.World1Zone1:GetChildren()) do
+                        if v:IsA("Model") and v:FindFirstChild('HumanoidRootPart') and v:FindFirstChild('Humanoid') and v.Humanoid.Health > 0 and v.Name == World1z3 then
+                            game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = v.HumanoidRootPart.CFrame * CFrame.new(0,0,5)
+                        end
+                    end
+                end
+                
+            end)
+        end
+    end,
+ })
+
+ local Section = Tab1:CreateSection("Baratea Quest")
+
+ local Button = Tab:CreateButton({
+    Name = "Teleport to Quest",
+    Interact = 'Changable',
+    Callback = function()
+        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = game:GetService("Workspace").QuestGiver.QuestZone4.HumanoidRootPart.CFrame * CFrame.new(0,0,3)
+    end,
+ })
+
+ local Dropdown = Tab1:CreateDropdown({
+    Name = "Select Baratea Mobs",
+    Options = {"GoldCrew1", "GoldCrew2", "Jin", "Marble"},
+    CurrentOption = "",
+    Flag = "w1z4Dropdown1", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
+    Callback = function(Option)
+        World1z4 = Option
+    end,
+ })
+
+ local Toggle = Tab1:CreateToggle({
+    Name = "Auto Farm",
+    CurrentValue = false,
+    Flag = "FarmToggle4", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
+    Callback = function(Value)
+        FarmAuto = Value
+        if FarmAuto then
+            pcall(function ()
+                while FarmAuto and task.wait() do
+                    for i,v in pairs(game:GetService("Workspace").Enemies.World1Zone1:GetChildren()) do
+                        if v:IsA("Model") and v:FindFirstChild('HumanoidRootPart') and v:FindFirstChild('Humanoid') and v.Humanoid.Health > 0 and v.Name == World1z4 then
+                            game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = v.HumanoidRootPart.CFrame * CFrame.new(0,0,5)
+                        end
+                    end
+                end
+                
+            end)
+        end
+    end,
+ })
+
+ local Section = Tab1:CreateSection("Sawfish Park Quest")
+
+ local Button = Tab:CreateButton({
+    Name = "Teleport to Quest",
+    Interact = 'Changable',
+    Callback = function()
+        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = game:GetService("Workspace").QuestGiver.QuestZone5.HumanoidRootPart.CFrame * CFrame.new(0,0,3)
+    end,
+ })
+
+ local Dropdown = Tab1:CreateDropdown({
+    Name = "Select Sawfish Park Mobs",
+    Options = {"Fish1", "Fish2", "Chomp", "Karate", "Squid"},
+    CurrentOption = "",
+    Flag = "w1z5Dropdown1", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
+    Callback = function(Option)
+        World1z5 = Option
+    end,
+ })
+
+ local Toggle = Tab1:CreateToggle({
+    Name = "Auto Farm",
+    CurrentValue = false,
+    Flag = "FarmToggle6", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
+    Callback = function(Value)
+        FarmAuto = Value
+        if FarmAuto then
+            pcall(function ()
+                while FarmAuto and task.wait() do
+                    for i,v in pairs(game:GetService("Workspace").Enemies.World1Zone1:GetChildren()) do
+                        if v:IsA("Model") and v:FindFirstChild('HumanoidRootPart') and v:FindFirstChild('Humanoid') and v.Humanoid.Health > 0 and v.Name == World1z5 then
+                            game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = v.HumanoidRootPart.CFrame * CFrame.new(0,0,5)
+                        end
+                    end
+                end
+                
+            end)
+        end
+    end,
+ })
+
+ local Section = Tab1:CreateSection("Snow Hills Quest")
+
+ local Button = Tab:CreateButton({
+    Name = "Teleport to Quest",
+    Interact = 'Changable',
+    Callback = function()
+        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = game:GetService("Workspace").QuestGiver.QuestZone6.HumanoidRootPart.CFrame * CFrame.new(0,0,3)
+    end,
+ })
+
+ local Dropdown = Tab1:CreateDropdown({
+    Name = "Select Snow Hill Mobs",
+    Options = {"LittleBunny", "MidBunny", "BigBunny", "Afro", "Jester"},
+    CurrentOption = "",
+    Flag = "w2z1Dropdown1", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
+    Callback = function(Option)
+        World2z1 = Option
+    end,
+ })
+
+ local Toggle = Tab1:CreateToggle({
+    Name = "Auto Farm",
+    CurrentValue = false,
+    Flag = "FarmToggle5", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
+    Callback = function(Value)
+        FarmAuto = Value
+        if FarmAuto then
+            pcall(function ()
+                while FarmAuto and task.wait() do
+                    for i,v in pairs(game:GetService("Workspace").Enemies.World1Zone1:GetChildren()) do
+                        if v:IsA("Model") and v:FindFirstChild('HumanoidRootPart') and v:FindFirstChild('Humanoid') and v.Humanoid.Health > 0 and v.Name == World2z1 then
+                            game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = v.HumanoidRootPart.CFrame * CFrame.new(0,0,5)
+                        end
+                    end
+                end
+                
+            end)
+        end
+    end,
+ })
+
+ local Section = Tab1:CreateSection("Desert Kingdom Quest")
+
+ local Button = Tab:CreateButton({
+    Name = "Teleport to Quest",
+    Interact = 'Changable',
+    Callback = function()
+        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = game:GetService("Workspace").QuestGiver.QuestZone7.HumanoidRootPart.CFrame * CFrame.new(0,0,3)
+    end,
+ })
+
+ local Dropdown = Tab1:CreateDropdown({
+    Name = "Select Desert Kingdom Mobs",
     Options = {"Steel","BombMan","Kilo","Spikes","Mole","Batter"},
     CurrentOption = "Steel",
     Flag = "Dropdown1", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
@@ -158,7 +438,6 @@ local Window = Rayfield:CreateWindow({
 
  local Toggle = Tab1:CreateToggle({
     Name = "Auto Farm",
-    Info = "", -- Speaks for itself, Remove if none.
     CurrentValue = false,
     Flag = "FarmToggle1", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
     Callback = function(Value)
@@ -177,6 +456,8 @@ local Window = Rayfield:CreateWindow({
         end
     end,
  })
+
+ local Tab2 = Window:CreateTab("Auto Boss Farms") -- Title, Image
 
 local  plr = game.Players.LocalPlayer
 
@@ -304,7 +585,7 @@ local  plr = game.Players.LocalPlayer
  end))
 
 
- local Dropdown = Tab1:CreateDropdown({
+ local Dropdown = Tab2:CreateDropdown({
     Name = "Select Boss",
     Options = {"Cap Freeman", "Boogie", "Slasher", "Don Craig", "Sawfish", "Muncher", "Croc"},
     CurrentOption = "",
@@ -314,7 +595,7 @@ local  plr = game.Players.LocalPlayer
     end,
  })
 
- local Toggle = Tab1:CreateToggle({
+ local Toggle = Tab2:CreateToggle({
     Name = "Auto Boss Farm",
     CurrentValue = false,
     Flag = "BossToggle1", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
