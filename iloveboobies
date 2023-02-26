@@ -19,7 +19,7 @@ local Window = Rayfield:CreateWindow({
     LoadingSubtitle = "by BIGDICK",
     ConfigurationSaving = {
        Enabled = true,
-       FolderName = nil, -- Create a custom folder for your hub/game
+       FolderName = "BIGDICK Hub", -- Create a custom folder for your hub/game
        FileName = "PornHub"
     },
     Discord = {
@@ -79,6 +79,28 @@ local Window = Rayfield:CreateWindow({
  })
 
  local Toggle = Tab:CreateToggle({
+    Name = "Auto Atk",
+    CurrentValue = false,
+    Flag = "atk1", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
+    Callback = function(Value)
+        autoatk = Value
+        if autoatk then
+            pcall(function ()
+                while autoatk and task.wait(0.3) do
+                    local button = game:service'VirtualInputManager'
+                    local X, Y = 0, 0
+                   
+                        button:SendMouseButtonEvent(X, Y, 0, true, game, 1)
+                        button:SendMouseButtonEvent(X, Y, 0, false, game, 1)
+                end
+                
+            end)
+        end
+
+    end,
+ })
+
+ local Toggle = Tab:CreateToggle({
     Name = "Auto Skills",
     CurrentValue = false,
     Flag = "Skill1", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
@@ -89,18 +111,23 @@ local Window = Rayfield:CreateWindow({
                 while SkillAuto and task.wait() do
                     local button = game:service'VirtualInputManager'
                     local X, Y = 0, 0
-    
-                        button:SendMouseButtonEvent(X, Y, 0, true, game, 1)
-                        button:SendMouseButtonEvent(X, Y, 0, false, game, 1)
                         wait(0.3)
                         button:SendKeyEvent(true, "Q", false, game)
+                        wait(0.3)
                         button:SendKeyEvent(true, "E", false, game)
+                        wait(0.3)
                         button:SendKeyEvent(true, "R", false, game)
+                        wait(0.3)
                         button:SendKeyEvent(true, "T", false, game)
+                        wait(0.3)
                         button:SendKeyEvent(true, "One", false, game)
+                        wait(0.3)
                         button:SendKeyEvent(true, "Two", false, game)
+                        wait(0.3)
                         button:SendKeyEvent(true, "Three", false, game)
+                        wait(0.3)
                         button:SendKeyEvent(true, "Four", false, game)
+                        wait(0.3)
                 end
                 
             end)
@@ -116,7 +143,7 @@ local Window = Rayfield:CreateWindow({
         CoinCollect = Value
         if CoinCollect then
             pcall(function ()
-                while CoinCollect and task.wait() do
+                while CoinCollect and task.wait(0.6) do
                 local coins = game:GetService("Workspace"):GetDescendants()
                 for i,v in pairs(coins) do 
                 if v.Name == 'CoinDrop' then
@@ -167,13 +194,13 @@ local Window = Rayfield:CreateWindow({
     end,
  })
 
- local Tab1 = Window:CreateTab("Auto Farms") -- Title, Image
+ local Tab1 = Window:CreateTab("Auto Select Farm") -- Title, Image
 
  local Section = Tab1:CreateSection("Must Be in World First") -- The 2nd argument is to tell if its only a Title and doesnt contain elements
 
  local Section = Tab1:CreateSection("East Town Quest")
 
- local Button = Tab:CreateButton({
+ local Button = Tab1:CreateButton({
     Name = "Teleport to Quest",
     Interact = 'Changable',
     Callback = function()
@@ -214,7 +241,7 @@ local Window = Rayfield:CreateWindow({
 
  local Section = Tab1:CreateSection("Buggy's Town Quest")
 
- local Button = Tab:CreateButton({
+ local Button = Tab1:CreateButton({
     Name = "Teleport to Quest",
     Interact = 'Changable',
     Callback = function()
@@ -255,7 +282,7 @@ local Window = Rayfield:CreateWindow({
 
  local Section = Tab1:CreateSection("Maple Village Quest")
 
- local Button = Tab:CreateButton({
+ local Button = Tab1:CreateButton({
     Name = "Teleport to Quest",
     Interact = 'Changable',
     Callback = function()
@@ -296,7 +323,7 @@ local Window = Rayfield:CreateWindow({
 
  local Section = Tab1:CreateSection("Baratea Quest")
 
- local Button = Tab:CreateButton({
+ local Button = Tab1:CreateButton({
     Name = "Teleport to Quest",
     Interact = 'Changable',
     Callback = function()
@@ -337,7 +364,7 @@ local Window = Rayfield:CreateWindow({
 
  local Section = Tab1:CreateSection("Sawfish Park Quest")
 
- local Button = Tab:CreateButton({
+ local Button = Tab1:CreateButton({
     Name = "Teleport to Quest",
     Interact = 'Changable',
     Callback = function()
@@ -378,7 +405,7 @@ local Window = Rayfield:CreateWindow({
 
  local Section = Tab1:CreateSection("Snow Hills Quest")
 
- local Button = Tab:CreateButton({
+ local Button = Tab1:CreateButton({
     Name = "Teleport to Quest",
     Interact = 'Changable',
     Callback = function()
@@ -419,7 +446,7 @@ local Window = Rayfield:CreateWindow({
 
  local Section = Tab1:CreateSection("Desert Kingdom Quest")
 
- local Button = Tab:CreateButton({
+ local Button = Tab1:CreateButton({
     Name = "Teleport to Quest",
     Interact = 'Changable',
     Callback = function()
@@ -447,12 +474,11 @@ local Window = Rayfield:CreateWindow({
             pcall(function ()
                 while FarmAuto and task.wait() do
                     for i,v in pairs(game:GetService("Workspace").Enemies.World2Zone2:GetChildren()) do
-                        if v:IsA("Model") and v:FindFirstChild('HumanoidRootPart') and v:FindFirstChild('Humanoid') and v.Humanoid.Health > 0 and v.Name == SelectName then
+                        if v:IsA("Model") and v:FindFirstChild('HumanoidRootPart') and v:FindFirstChild('Humanoid') and v.Humanoid.Health ~= nil and v.Name == SelectName then
                             game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = v.HumanoidRootPart.CFrame * CFrame.new(0,0,5)
                         end
                     end
-                end
-                
+                end               
             end)
         end
     end,
@@ -602,5 +628,44 @@ local  plr = game.Players.LocalPlayer
     Flag = "BossToggle1", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
     Callback = function(t)
         getgenv().bossfarm = t
+    end,
+ })
+
+ local Tab3 = Window:CreateTab("Auto Farm Zone") -- Title, Image
+
+ local Section = Tab3:CreateSection("Must be in Selected World")
+
+ local Dropdown = Tab3:CreateDropdown({
+    Name = "Select World",
+    Options = {"World1Zone1", "World1Zone2", "World1Zone3", "World1Zone4", "World1Zone5", "World2Zone1", "World2Zone2"},
+    CurrentOption = "",
+    Flag = "worldselectDropdown1", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
+    Callback = function(Option)
+        selectWorld = Option
+    end,
+ })
+
+ local Toggle = Tab3:CreateToggle({
+    Name = "Auto Farm Everything",
+    CurrentValue = false,
+    Flag = "autoeverything1", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
+    Callback = function(Value)
+        everything = Value
+        if everything then
+           pcall(function ()
+                while everything and task.wait() do
+                for _, v in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
+                if v.Name == selectWorld then
+                    for _, x in pairs(v:GetChildren()) do
+                    if x:IsA("Model") and x:FindFirstChild("HumanoidRootPart") and x:FindFirstChild("Humanoid") and x.Humanoid.Health ~= nil then
+                    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = x.HumanoidRootPart.CFrame * CFrame.new(0,0,5)
+                end
+                end
+                end
+            end
+        end           
+            end)
+        end
+
     end,
  })
