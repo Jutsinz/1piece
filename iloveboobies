@@ -631,6 +631,69 @@ local  plr = game.Players.LocalPlayer
     end,
  })
 
+ local Dropdown = Tab2:CreateDropdown({
+    Name = "Dropdown Example",
+    Options = {"SawFish", "Boogie"},
+    CurrentOption = "",
+    Flag = "raidDropdown1", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
+    Callback = function(Option)
+        RaidBoss = Option
+    end,
+ })
+
+ local Toggle = Tab2:CreateToggle({
+    Name = "Auto Teleport Raid",
+    CurrentValue = false,
+    Flag = "RaidToggle1", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
+    Callback = function(Value)
+        RaidKill = Value
+        if RaidKill then
+            pcall(function ()
+                while RaidKill do
+                    if game:GetService("Workspace").Worlds.World1.Lobby.Raid.RaidGUI.SurfaceGui.Timer.Text:match("Raid In Progress") then
+                        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(397.592651, 60.478054, -4316.15527, 0.999958456, -8.54472688e-08, -0.0091136517, 8.53811812e-08, 1, -7.64078756e-09, 0.0091136517, 6.86233603e-09, 0.999958456)
+                        if RaidBoss == Boogie then
+                            game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-49.3240776, -3.19259834, -7561.72412, 0.953682899, 2.59311062e-08, -0.300813824, -2.35643505e-09, 1, 7.87324694e-08, 0.300813824, -7.43769633e-08, 0.953682899)
+                            game.Players.LocalPlayer.Character.HumanoidRootPart.Anchored = true
+                            repeat task.wait() until game:GetService("Workspace").Worlds.World1.Lobby.RaidLobby.Map.BuggyRaid:FindFirstChild("Teleport")
+                            game.Players.LocalPlayer.Character.HumanoidRootPart.Anchored = false
+                        elseif RaidBoss == SawFish then
+                            game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-248.971832, -32.4975319, -7534.51416, 0.334035993, 8.25061761e-08, 0.942560315, -2.13246079e-08, 1, -7.99768358e-08, -0.942560315, 6.61541133e-09, 0.334035993)
+                            game.Players.LocalPlayer.Character.HumanoidRootPart.Anchored = true
+                            repeat task.wait() until game:GetService("Workspace").Worlds.World1.Lobby.RaidLobby.Map.BuggyRaid:FindFirstChild("Teleport")
+                            game.Players.LocalPlayer.Character.HumanoidRootPart.Anchored = false
+                        end
+                        end
+                end
+                
+            end)
+        end
+    end,
+ })
+
+ local Toggle = Tab2:CreateToggle({
+    Name = "Auto Farm Raid",
+    Info = "Use At Your Own Risk", -- Speaks for itself, Remove if none.
+    CurrentValue = false,
+    Flag = "FarmraidToggle1", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
+    Callback = function(Value)
+        FarmRaid = Value
+        if FarmRaid then
+            pcall(function ()
+                while FarmRaid and task.wait() do
+                    for i,v in pairs(game.Workspace:GetChildren()) do
+                        if v.Name == "RaidBoss" and v:FindFirstChild("HumanoidRootPart") and v.Humanoid.Health > 0  then
+                        v.HumanoidRootPart.Size = Vector3.new(999,999,999)
+                        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = v.Head.CFrame * CFrame.new(0,300,40)
+                    end
+                end
+                end
+                
+            end)
+        end
+    end,
+ })
+
  local Tab3 = Window:CreateTab("Auto Farm Zone") -- Title, Image
 
  local Section = Tab3:CreateSection("Must be in Selected World")
